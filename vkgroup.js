@@ -22,45 +22,43 @@ let indexattr = randomInteger(0,8);
 
 
 getBDUsers().then((users) => {
-	if (users.length != 0)
-	{
-	
-	
-	send("У кого то есть ДР");
-
-	let msg='Поздравляем наших подписчиков с Днем Рождения: \n';
-	msg+="@id"+users[0].id+" ("+users[0].last_name+" "+users[0].first_name+")";
-	if (users.length === 1)
-	{
-		
-	}
-	else
-	{
-		for (let i =1 ;i<users.length;i++)
+		if (users.length != 0)
 		{
-			msg+=", @id"+users[i].id+" ("+users[i].last_name+" "+users[i].first_name+")";
+			send("У кого то есть ДР");
+			let msg='Поздравляем наших подписчиков с Днем Рождения: \n';
+			msg+="@id"+users[0].id+" ("+users[0].last_name+" "+users[0].first_name+")";
+			if (users.length === 1)
+			{
+
+			}
+			else
+			{
+				for (let i =1 ;i<users.length;i++)
+				{
+					msg+=", @id"+users[i].id+" ("+users[i].last_name+" "+users[i].first_name+")";
+				}
+			}
+			console.log(msg);
+			msg+="\n Желаем Вам счастья!!! 🌸🌸🌸"
+			msg=encodeURI(msg);
+			console.log(msg);
+			const url = `https://api.vk.com/api.php?oauth=1&method=wall.post&owner_id=${id1}&message=${msg}&attachments=${attachments[indexattr]}&from_group=true&v=5.67&access_token=${token}`;
+			const resp = axios
+			.get(url, {
+				headers: { 'Content-type': 'text/html; charset=windows-1251' },
+			})
+			.then(function (resp) {
+				console.log(resp.body);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+				console.log(url);
 		}
-	}
-	console.log(msg);
-	msg+="\n Желаем Вам счастья!!! 🌸🌸🌸"
-	msg=encodeURI(msg);
-	console.log(msg);
-	   const url = `https://api.vk.com/api.php?oauth=1&method=wall.post&owner_id=${id1}&message=${msg}&attachments=${attachments[indexattr]}&from_group=true&v=5.67&access_token=${token}`;
-        try {
-            const resp =  axios.get(
-                url,
-                { headers: { 'Content-type': 'text/html; charset=windows-1251' } }
-            );
-            console.log('Resp ok', resp.body);
-        } catch (e) {
-            console.log('Resp err', e);
-        }
-		console.log(url);
-	}
-	else
-	{
-		send("Ни у кого нет ДР");
-	}
+		else
+		{
+			send("Ни у кого нет ДР");
+		}
 	}).catch();
     
 
